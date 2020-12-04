@@ -1,0 +1,87 @@
+<div class="container">
+    <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-3">
+        <div class="form-group required">
+            <input class="form-control" formControlName="username" placeholder="UserName">
+            <label class="text-danger"
+                *ngIf="registerForm.get('username').touched && registerForm.get('username').errors?.required">
+                Required Field
+            </label>
+        </div>
+        <div class="form-group required">
+            <input class="form-control" formControlName="email" placeholder="email">
+            <label class="text-danger"
+                *ngIf="registerForm.get('email').touched && registerForm.get('email').errors?.required">
+                Required Field
+            </label>
+            <label class="text-danger"
+                *ngIf="registerForm.get('email').touched && registerForm.get('email').errors?.email">
+                Email must be a valid email address
+            </label>
+        </div>
+        <div class="form-group required">
+            <input class="form-control" formControlName="name" placeholder="Name">
+            <label class="text-danger"
+                *ngIf="registerForm.get('name').touched && registerForm.get('name').errors?.required">
+                Required Field
+            </label>
+            <label class="text-danger"
+                *ngIf="registerForm.get('name').touched && registerForm.get('name').errors?.pattern">
+                Only Characters are allowed
+            </label>
+        </div>
+        <div class="form-group required">
+            <input class="form-control" formControlName="phoneNumber" placeholder="Phone Number">
+            <label class="text-danger"
+                *ngIf="registerForm.get('phoneNumber').touched && registerForm.get('phoneNumber').errors?.required">
+                Required Field
+            </label>
+            <label class="text-danger"
+            *ngIf="registerForm.get('phoneNumber').touched && registerForm.get('phoneNumber').errors?.pattern">
+            Only Numbers are allowed & should be of 10 digits
+        </label>
+        </div>
+        <div class="form-group required">
+            <input class="form-control" formControlName="password" placeholder="Password" type="password">
+            <label class="text-danger"
+                *ngIf="registerForm.get('password').touched && registerForm.get('password').errors?.required">
+                Required Field
+            </label>
+            <label class="text-danger"
+                *ngIf="registerForm.get('password').touched && registerForm.get('password').errors?.minlength">
+                Password must be at least 6 characters
+            </label>
+        </div>
+        <div class="form-group required">
+            <input class="form-control" formControlName="confirmPassword" placeholder="Confirm Password" type="password">
+            <label class="text-danger"
+                *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').errors?.required">
+                Required Field
+            </label>
+            <label class="text-danger"
+            *ngIf="registerForm.get('confirmPassword').touched && registerForm.get('confirmPassword').errors?.mustMatch">
+            Passwords must match
+        </label>
+        </div>
+
+        <div class="form-group form-check">
+            <input type="checkbox" formControlName="acceptedCommercial" id="acceptCommercial"
+                class="form-check-input" />
+            <label for="acceptCommercial" class="form-check-label">Accepted Commercial</label>
+            <label class="text-danger ml-2"
+                *ngIf="registerForm.get('acceptedCommercial').touched && registerForm.get('acceptedCommercial').errors">
+                Required Field
+            </label>
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" formControlName="acceptedTerms" id="acceptTerms" class="form-check-input" />
+            <label for="acceptTerms" class="form-check-label">Accepted Terms</label>
+            <label class="text-danger ml-2"
+                *ngIf="registerForm.get('acceptedTerms').touched && registerForm.get('acceptedTerms').errors">
+                Required Field
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary px-5" [disabled]="!registerForm.valid">Register</button>
+        </div>
+    </form>
+</div>

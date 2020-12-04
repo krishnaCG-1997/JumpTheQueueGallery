@@ -1,0 +1,30 @@
+<nav class="navbar bg-dark">
+  <div class="header d-block">
+    <a class="navbar-brand" routerLink="/auth/login">Jump The Queue</a>
+  </div>
+  <div class="d-flex">
+    <button (click)="logOut()"><span><i class="fa fa-sign-out" aria-hidden="true"></i></span> </button>
+  </div>
+</nav>
+
+<div class="pt-1">
+  <div id="mySidenav" class="sidenav">
+    <div *ngFor='let event of eventDetails; let i=index'>
+      <a class="mt-5" [ngStyle]="{'background-color': event.isJoined ? 'black' : '#111' }"
+        (click)="viewQueue(event.id)">{{event.eventName}} </a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!eventService.isDisable">
+  <div *ngIf="toggle ;then content else other_content"> </div>
+</div>
+<ng-template #content><a class="float bg-dark" (click)="closeNav()">
+    <i class="fa fa-close my-float"></i>
+  </a></ng-template>
+<ng-template #other_content><a class="float bg-dark" (click)="openNav()">
+    <i class="fa fa-plus my-float"></i>
+  </a></ng-template>
+
+
+<router-outlet></router-outlet>

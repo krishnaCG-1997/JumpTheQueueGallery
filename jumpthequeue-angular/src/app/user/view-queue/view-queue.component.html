@@ -1,0 +1,28 @@
+<div class="card mt-4">
+  <img src="/assets/image/jumptheq.png" alt="Jump the queue" style="width:100%" />
+  <div class="mt-2 details">
+    <h1>{{eventDetails.eventName}} <span><img src={{eventDetails.logo}} alt="" size=16px></span></h1>
+  </div>
+  <div *ngIf="eventDetails.isJoined">
+    <div class="card brdr">
+      <h1>Access Code</h1>
+      <div class="display-4">
+        <h1 class="style-bold">{{queue[0].queueNumber}}</h1>
+      </div>
+      <h4>Estimated Time: <span><countdown [config]="{ leftTime: queue[0].minEstimatedTime, format: 'm:s' }"></countdown></span></h4>
+      
+    </div>
+  </div>
+  <div class="mt-2">
+    <h1>Currently Being Attended</h1>
+    <h4 class="style-bold size">Q001</h4>
+  </div>
+  <div *ngIf="eventDetails.isJoined ;then content else other_content"> </div>
+  <ng-template #content>
+    <p><button class="bg-dark" (click)="leave()">Leave The Queue</button></p>
+  </ng-template>
+  <ng-template #other_content>
+    <p><button class="bg-dark" (click)="join(eventDetails.id)">Join The Queue</button></p>
+  </ng-template>
+
+</div>
