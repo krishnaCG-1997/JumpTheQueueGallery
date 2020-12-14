@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Visitor } from './models/visitor.model';
+import { Visitor } from '../shared/modals/visitor.model';
 import { HttpClient } from '@angular/common/http';
-import { FilterVisitor } from './models/filter-visitor.model';
-import { Pageable } from './models/pageable.model';
+import { FilterVisitor } from '../shared/modals/filter-visitor.model';
+import { Pageable } from '../shared/modals/pageable.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { QueueDetailCTO } from '../shared/modals/queue-detail-cto.model';
 import { QueueDetail } from '../shared/modals/queue-detail.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
   userMail: string;
   userId: string;
   queuesDetail: QueueDetail;
-  url = 'http://localhost:8081/services/rest';
+  url = environment.url;
 
   constructor(private route: Router, private http: HttpClient, private snackBar: MatSnackBar) { }
 
@@ -42,25 +43,27 @@ export class AuthService {
     this.getVisitorByUsername(username).subscribe(
       (visitor) => {
         console.log(visitor['content'][0]);
+        if(visitor['content'][0]){
         if (visitor['content'][0].username === username && visitor['content'][0].password === password) {
 
           this.login(visitor['content'][0].id, visitor['content'][0].username);
-          this.snackBar.open('Logged In', 'Successfully', {
-            duration: 2000,
-          });
+          this.openSnackBar('Logged In', 'Successfully');
 
-        } else {
-          this.snackBar.open('access denied', 'OK', {
-            duration: 2000,
-          });
+        }} else {
+          this.openSnackBar('access denied', 'User Not Found');
         }
       },
       (err: any) => {
-        this.snackBar.open('access error', 'OK', {
-          duration: 2000,
-        });
+        this.openSnackBar('access error', 'OK');
       },
     );
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+      panelClass: ['mat-toolbar', 'mat-accent']
+    });
   }
 
   fetchJoinedEvents()

@@ -37,6 +37,4 @@ public interface UcManageEvent {
    */
   void increaseVisitorCount(long eventId);
 
-  EventEto eventById(long eventId);
-
 }

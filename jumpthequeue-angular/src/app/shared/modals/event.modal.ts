@@ -8,6 +8,7 @@ export class Events {
     endDate: Date;
     attentionTime: Date;
     logo: string;
+    currentlyBeingAttended: string;
     // tslint:disable-next-line: no-inferrable-types
     isJoined: boolean = false;
 

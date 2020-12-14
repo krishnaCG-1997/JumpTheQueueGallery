@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { Visitor } from '../models/visitor.model';
+import { Visitor } from '../../shared/modals/visitor.model';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],

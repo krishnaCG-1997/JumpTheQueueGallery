@@ -35,7 +35,7 @@ public class EventmanagementTest extends ComponentTest {
     this.eventEto.setDescription("Biggest december eve is here");
     this.eventEto.setLogo("");
     this.eventEto.setVisitorCount(1);
-    this.eventEto.setAttentionTime(Timestamp.from(Instant.now()));
+    this.eventEto.setAttentionTime("5");
   }
 
   @Test
@@ -52,7 +52,7 @@ public class EventmanagementTest extends ComponentTest {
 
     EventEto eventEtoResult = this.eventmanagement.saveEvent(this.eventEto);
     this.eventmanagement.increaseVisitorCount(eventEtoResult.getId());
-    EventEto event = this.eventmanagement.eventById(eventEtoResult.getId());
+    EventEto event = this.eventmanagement.findEvent(eventEtoResult.getId());
     assertThat(event.getVisitorCount()).isEqualTo(this.eventEto.getVisitorCount() + 1);
   }
 
@@ -61,7 +61,7 @@ public class EventmanagementTest extends ComponentTest {
 
     EventEto eventEtoResult = this.eventmanagement.saveEvent(this.eventEto);
     this.eventmanagement.decreaseVisitorCount(eventEtoResult.getId());
-    EventEto event = this.eventmanagement.eventById(eventEtoResult.getId());
+    EventEto event = this.eventmanagement.findEvent(eventEtoResult.getId());
     assertThat(event.getVisitorCount()).isEqualTo(this.eventEto.getVisitorCount() - 1);
   }
 }

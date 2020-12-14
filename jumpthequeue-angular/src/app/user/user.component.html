@@ -11,7 +11,7 @@
   <div id="mySidenav" class="sidenav">
     <div *ngFor='let event of eventDetails; let i=index'>
       <a class="mt-5" [ngStyle]="{'background-color': event.isJoined ? 'black' : '#111' }"
-        (click)="viewQueue(event.id)">{{event.eventName}} </a>
+        (click)="viewQueue(event.id, event.eventName)">{{event.eventName}} </a>
     </div>
   </div>
 </div>

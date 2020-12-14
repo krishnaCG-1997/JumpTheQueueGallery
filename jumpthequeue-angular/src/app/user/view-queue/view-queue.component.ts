@@ -12,14 +12,34 @@ import { EventService } from 'src/app/shared/services/event.service';
 })
 export class ViewQueueComponent implements OnInit {
 
-
-  joined = false;
   id: string;
   eventDetails: any;
   mail: string;
   queueNo: string;
   queue: QueueDetail[];
   events: Events[] = [];
+  timer: string;
+
+  x = setInterval(() => {
+    if (this.queue[0] != null) {
+      const currentTime = new Date().getTime();
+      const estimatedTime = new Date(this.queue[0].minEstimatedTime).getTime();
+      const diff = estimatedTime - currentTime;
+      const hr = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const min = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const sec = Math.floor((diff % (1000 * 60)) / (1000));
+
+      if (diff > 0) {
+        this.timer = hr + ':' + min + ':' + sec;
+      }
+      else {
+        this.timer = '00:00:00';
+      }
+    }
+    else {
+      this.timer = '00:00:00';
+    }
+  }, 1000);
 
   constructor(private route: ActivatedRoute, private eventService: EventService, private snackBar: MatSnackBar) { }
 
@@ -56,8 +76,8 @@ export class ViewQueueComponent implements OnInit {
 
   join(eventId: string) {
     this.updateEventList(true);
-    this.joined = true;
     this.eventDetails.isJoined = true;
+    this.checkCount(this.eventDetails.isJoined);
     this.eventService.joinEvent(eventId).subscribe(data => {
       this.queue[0] = data;
       console.log(data);
@@ -68,7 +88,6 @@ export class ViewQueueComponent implements OnInit {
 
   leave() {
     this.updateEventList(false);
-    this.joined = false;
     this.eventDetails.isJoined = false;
     this.eventService.leaveEvent(this.queue[0].id, this.eventDetails.id).subscribe(data => {
       this.eventService.fetchJoinedEvents();
@@ -76,15 +95,33 @@ export class ViewQueueComponent implements OnInit {
       this.openSnackBar('Leaved The Queue', 'Success');
     },
       err => {
-        this.openSnackBar('access denied', 'OK');
+        this.openSnackBar('Leave The Queue', 'Error');
       });
+  }
+
+  checkCount(isJoined: boolean)
+  {
+    if(isJoined===true){
+      return true;
+    }
+    if(this.eventDetails.visitorCount===0)
+    {
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 4000,
+      duration: 3000,
       panelClass: ['mat-toolbar', 'mat-accent']
     });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.x);
   }
 
 }

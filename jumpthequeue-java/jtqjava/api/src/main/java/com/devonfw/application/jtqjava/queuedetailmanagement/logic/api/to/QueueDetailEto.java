@@ -20,7 +20,7 @@ public class QueueDetailEto extends AbstractEto implements QueueDetail {
 
   private Timestamp endTime;
 
-  private String minEstimatedTime;
+  private Timestamp minEstimatedTime;
 
   private Long visitorId;
 
@@ -75,13 +75,13 @@ public class QueueDetailEto extends AbstractEto implements QueueDetail {
   }
 
   @Override
-  public String getMinEstimatedTime() {
+  public Timestamp getMinEstimatedTime() {
 
     return this.minEstimatedTime;
   }
 
   @Override
-  public void setMinEstimatedTime(String minEstimatedTime) {
+  public void setMinEstimatedTime(Timestamp minEstimatedTime) {
 
     this.minEstimatedTime = minEstimatedTime;
   }

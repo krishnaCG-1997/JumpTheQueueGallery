@@ -24,9 +24,11 @@ public class EventEto extends AbstractEto implements Event {
 
   private String logo;
 
-  private Timestamp attentionTime;
+  private String attentionTime;
 
   private int visitorCount;
+
+  private String currentlyBeingAttended;
 
   @Override
   public String getEventName() {
@@ -101,13 +103,13 @@ public class EventEto extends AbstractEto implements Event {
   }
 
   @Override
-  public Timestamp getAttentionTime() {
+  public String getAttentionTime() {
 
     return this.attentionTime;
   }
 
   @Override
-  public void setAttentionTime(Timestamp attentionTime) {
+  public void setAttentionTime(String attentionTime) {
 
     this.attentionTime = attentionTime;
   }
@@ -196,13 +198,25 @@ public class EventEto extends AbstractEto implements Event {
   @Override
   public int getVisitorCount() {
 
-    return visitorCount;
+    return this.visitorCount;
   }
 
   @Override
   public void setVisitorCount(int visitorCount) {
 
     this.visitorCount = visitorCount;
+  }
+
+  @Override
+  public String getCurrentlyBeingAttended() {
+
+    return this.currentlyBeingAttended;
+  }
+
+  @Override
+  public void setCurrentlyBeingAttended(String currentlyBeingAttended) {
+
+    this.currentlyBeingAttended = currentlyBeingAttended;
   }
 
 }

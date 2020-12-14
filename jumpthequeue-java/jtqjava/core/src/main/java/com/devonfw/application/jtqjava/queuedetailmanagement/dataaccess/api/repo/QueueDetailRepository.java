@@ -47,7 +47,7 @@ public interface QueueDetailRepository extends DefaultRepository<QueueDetailEnti
     if (endTime != null) {
       query.where($(alias.getEndTime()).eq(endTime));
     }
-    String minEstimatedTime = criteria.getMinEstimatedTime();
+    Timestamp minEstimatedTime = criteria.getMinEstimatedTime();
     if (minEstimatedTime != null) {
       query.where($(alias.getMinEstimatedTime()).eq(minEstimatedTime));
     }

@@ -21,7 +21,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private Timestamp endTime;
 
-  private String minEstimatedTime;
+  private Timestamp minEstimatedTime;
 
   private Long visitorId;
 
@@ -98,7 +98,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @return minEstimatedTimeId
    */
-  public String getMinEstimatedTime() {
+  public Timestamp getMinEstimatedTime() {
 
     return this.minEstimatedTime;
   }
@@ -106,7 +106,7 @@ public class QueueDetailSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @param minEstimatedTime setter for minEstimatedTime attribute
    */
-  public void setMinEstimatedTime(String minEstimatedTime) {
+  public void setMinEstimatedTime(Timestamp minEstimatedTime) {
 
     this.minEstimatedTime = minEstimatedTime;
   }

@@ -49,12 +49,12 @@ public interface QueueDetail extends ApplicationEntity {
   /**
    * @return minEstimatedTimeId
    */
-  public String getMinEstimatedTime();
+  public Timestamp getMinEstimatedTime();
 
   /**
    * @param minEstimatedTime setter for minEstimatedTime attribute
    */
-  public void setMinEstimatedTime(String minEstimatedTime);
+  public void setMinEstimatedTime(Timestamp minEstimatedTime);
 
   /**
    * getter for visitorId attribute

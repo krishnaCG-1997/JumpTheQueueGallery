@@ -4,7 +4,7 @@ export class QueueDetail {
     creationTime: Date;
     startTime: Date;
     endTime: Date;
-    minEstimatedTime: string;
+    minEstimatedTime: Date;
     visitorId: string;
     eventId: string;
 }

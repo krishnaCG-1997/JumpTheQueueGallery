@@ -25,7 +25,7 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
 
   private String logo;
 
-  private Timestamp attentionTime;
+  private String attentionTime;
 
   private StringSearchConfigTo eventNameOption;
 
@@ -36,6 +36,12 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   private StringSearchConfigTo logoOption;
 
   private Integer visitorCount;
+
+  private String currentlyBeingAttended;
+
+  private StringSearchConfigTo currentlyBeingAttendedOption;
+
+  private StringSearchConfigTo attentionTimeOption;
 
   /**
    * @return eventNameId
@@ -136,7 +142,7 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @return attentionTimeId
    */
-  public Timestamp getAttentionTime() {
+  public String getAttentionTime() {
 
     return this.attentionTime;
   }
@@ -144,7 +150,7 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   /**
    * @param attentionTime setter for attentionTime attribute
    */
-  public void setAttentionTime(Timestamp attentionTime) {
+  public void setAttentionTime(String attentionTime) {
 
     this.attentionTime = attentionTime;
   }
@@ -218,7 +224,7 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
    */
   public Integer getVisitorCount() {
 
-    return visitorCount;
+    return this.visitorCount;
   }
 
   /**
@@ -227,6 +233,55 @@ public class EventSearchCriteriaTo extends AbstractSearchCriteriaTo {
   public void setVisitorCount(Integer visitorCount) {
 
     this.visitorCount = visitorCount;
+  }
+
+  /**
+   * @return currentlyBeingAttendedId
+   */
+  public String getCurrentlyBeingAttended() {
+
+    return this.currentlyBeingAttended;
+  }
+
+  /**
+   * @param currentlyBeingAttended setter for currentlyBeingAttended attribute
+   */
+  public void setCurrentlyBeingAttended(String currentlyBeingAttended) {
+
+    this.currentlyBeingAttended = currentlyBeingAttended;
+  }
+
+  /**
+   * @return the {@link StringSearchConfigTo} used to search for {@link #getCurrentlyBeingAttended()
+   *         currentlyBeingAttended}.
+   */
+  public StringSearchConfigTo getCurrentlyBeingAttendedOption() {
+
+    return this.currentlyBeingAttendedOption;
+  }
+
+  /**
+   * @param currentlyBeingAttendedOption new value of {@link #getCurrentlyBeingAttendedOption()}.
+   */
+  public void setCurrentlyBeingAttendedOption(StringSearchConfigTo currentlyBeingAttendedOption) {
+
+    this.currentlyBeingAttendedOption = currentlyBeingAttendedOption;
+  }
+
+  /**
+   * @return the {@link StringSearchConfigTo} used to search for {@link #getAttentionTime() attentionTime}.
+   */
+  public StringSearchConfigTo getAttentionTimeOption() {
+
+    return this.attentionTimeOption;
+  }
+
+  /**
+   * @param attentionTimeOption new value of {@link #getAttentionTimeOption()}.
+   */
+  public void setAttentionTimeOption(StringSearchConfigTo attentionTimeOption) {
+
+    this.attentionTimeOption = attentionTimeOption;
   }
 
 }

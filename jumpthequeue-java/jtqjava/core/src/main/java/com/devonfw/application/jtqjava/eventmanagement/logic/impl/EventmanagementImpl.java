@@ -64,10 +64,4 @@ public class EventmanagementImpl extends AbstractComponentFacade implements Even
 
   }
 
-  @Override
-  public EventEto eventById(long eventId) {
-
-    return this.ucManageEvent.eventById(eventId);
-  }
-
 }

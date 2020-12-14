@@ -69,12 +69,12 @@ public interface Event extends ApplicationEntity {
   /**
    * @return attentionTimeId
    */
-  public Timestamp getAttentionTime();
+  public String getAttentionTime();
 
   /**
    * @param attentionTime setter for attentionTime attribute
    */
-  public void setAttentionTime(Timestamp attentionTime);
+  public void setAttentionTime(String attentionTime);
 
   /**
    * @return visitorCountId
@@ -85,5 +85,15 @@ public interface Event extends ApplicationEntity {
    * @param visitorCount setter for visitorCount attribute
    */
   public void setVisitorCount(int visitorCount);
+
+  /**
+   * @return currentlyBeingAttendedId
+   */
+  public String getCurrentlyBeingAttended();
+
+  /**
+   * @param currentlyBeingAttended setter for currentlyBeingAttended attribute
+   */
+  public void setCurrentlyBeingAttended(String currentlyBeingAttended);
 
 }

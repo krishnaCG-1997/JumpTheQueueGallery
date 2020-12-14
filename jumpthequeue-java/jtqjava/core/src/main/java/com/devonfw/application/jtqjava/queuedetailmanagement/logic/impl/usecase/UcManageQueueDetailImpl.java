@@ -63,61 +63,81 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
     long eventId = queueDetailEntity.getEventId();
     long visitorId = queueDetailEntity.getVisitorId();
 
+    List<QueueDetailEto> queueDetailEtosInQueue = getQueueDetailsByEventIdAndVisitorId(eventId, visitorId);
+
+    if (!queueDetailEtosInQueue.isEmpty()) {
+      return null;
+    }
+
+    List<QueueDetailEto> queueDetailEventEtosInQueue = getQueueDetailsByEventId(eventId);
+
+    EventEto event = this.eventManagement.findEvent(eventId);
+
+    if (queueDetailEventEtosInQueue.isEmpty()) {
+
+      queueDetailEntity.setQueueNumber("Q001");
+      queueDetailEntity.setMinEstimatedTime(calculateEstimatedTime(event, 1));
+
+    } else {
+
+      QueueDetailEto lastQueueNumber = queueDetailEventEtosInQueue.get(queueDetailEventEtosInQueue.size() - 1);
+      int lastTicketDigit = Integer.parseInt(lastQueueNumber.getQueueNumber().substring(1));
+      queueDetailEntity.setQueueNumber(generateTicketCode(lastTicketDigit));
+      queueDetailEntity.setMinEstimatedTime(calculateEstimatedTime(event, lastTicketDigit + 1));
+      System.out.println(calculateEstimatedTime(event, lastTicketDigit + 1));
+    }
+
+    // set the creation time, startTime and endTime
+    queueDetailEntity.setCreationTime(Timestamp.from(Instant.now()));
+    queueDetailEntity.setStartTime(event.getStartDate());
+    queueDetailEntity.setEndTime(event.getEndDate());
+
+    // save the queueDetail & increment visitor count
+    this.eventManagement.increaseVisitorCount(eventId);
+    QueueDetailEntity queueDetailEntitySaved = getQueueDetailRepository().save(queueDetailEntity);
+    LOG.debug("The queueDetail with id '{}' has been saved.", queueDetailEntitySaved.getId());
+
+    return getBeanMapper().map(queueDetailEntitySaved, QueueDetailEto.class);
+  }
+
+  /**
+   * Method return queueDetails By setting eventId & visitorId in Criteria.
+   *
+   * @param eventId
+   * @param visitorId
+   * @return List of QueueDetailETO
+   */
+
+  private List<QueueDetailEto> getQueueDetailsByEventIdAndVisitorId(long eventId, long visitorId) {
+
     QueueDetailSearchCriteriaTo queueDetailSearchCriteriaTo = new QueueDetailSearchCriteriaTo();
     queueDetailSearchCriteriaTo.setEventId(eventId);
     queueDetailSearchCriteriaTo.setVisitorId(visitorId);
     Pageable pageable = PageRequest.of(0, 1000);
     queueDetailSearchCriteriaTo.setPageable(pageable);
 
-    /**
-     * Calling the parent with the queueDetailManagement (injected) we use the method findQueueDetailEtos() that will
-     * call the implementation of the method inside (UcFindQueueDetailImpl) through the interface. This allows us to use
-     * the {@link UcFindQueueDetailImpl}.
-     */
     List<QueueDetailEto> queueDetailEtosInQueue = this.queueDetailManagement
         .findQueueDetailEtos(queueDetailSearchCriteriaTo).getContent();
+    return queueDetailEtosInQueue;
+  }
 
-    if (queueDetailEtosInQueue.isEmpty()) {
+  /**
+   * Method return queueDetails By setting eventId in Criteria.
+   *
+   * @param eventId of type eventId
+   * @return List of QueueDetailETO
+   */
 
-      QueueDetailSearchCriteriaTo queueDetailEventSearchCriteriaTo = new QueueDetailSearchCriteriaTo();
-      queueDetailEventSearchCriteriaTo.setEventId(eventId);
-      Pageable pageable1 = PageRequest.of(0, 1000);
-      queueDetailEventSearchCriteriaTo.setPageable(pageable1);
+  private List<QueueDetailEto> getQueueDetailsByEventId(long eventId) {
 
-      List<QueueDetailEto> queueDetailEventEtosInQueue = this.queueDetailManagement
-          .findQueueDetailEtos(queueDetailEventSearchCriteriaTo).getContent();
+    QueueDetailSearchCriteriaTo queueDetailEventSearchCriteriaTo = new QueueDetailSearchCriteriaTo();
+    queueDetailEventSearchCriteriaTo.setEventId(eventId);
+    Pageable pageable1 = PageRequest.of(0, 1000);
+    queueDetailEventSearchCriteriaTo.setPageable(pageable1);
 
-      EventEto event = this.eventManagement.eventById(eventId);
-
-      if (queueDetailEventEtosInQueue.isEmpty()) {
-
-        queueDetailEntity.setQueueNumber("Q001");
-        queueDetailEntity.setMinEstimatedTime(String.valueOf(event.getAttentionTime().getTime() / 1000));
-
-      } else {
-
-        int lastIndex = queueDetailEventEtosInQueue.size() - 1;
-        QueueDetailEto lastQueueNumber = queueDetailEventEtosInQueue.get(lastIndex);
-        int lastTicketDigit = Integer.parseInt(lastQueueNumber.getQueueNumber().substring(1));
-        queueDetailEntity.setQueueNumber(generateTicketCode(lastTicketDigit));
-        queueDetailEntity.setMinEstimatedTime(calculateEstimatedTime(event, lastTicketDigit + 1));
-        System.out.println(calculateEstimatedTime(event, lastTicketDigit + 1));
-      }
-
-      // set the creation time, startTime and endTime
-      queueDetailEntity.setCreationTime(Timestamp.from(Instant.now()));
-      queueDetailEntity.setStartTime(event.getStartDate());
-      queueDetailEntity.setEndTime(event.getEndDate());
-
-      // save the queueDetail & increment visitor count
-      this.eventManagement.increaseVisitorCount(eventId);
-      QueueDetailEntity queueDetailEntitySaved = getQueueDetailRepository().save(queueDetailEntity);
-      LOG.debug("The queueDetail with id '{}' has been saved.", queueDetailEntitySaved.getId());
-
-      return getBeanMapper().map(queueDetailEntitySaved, QueueDetailEto.class);
-    } else {
-      return null;
-    }
+    List<QueueDetailEto> queueDetailEventEtosInQueue = this.queueDetailManagement
+        .findQueueDetailEtos(queueDetailEventSearchCriteriaTo).getContent();
+    return queueDetailEventEtosInQueue;
   }
 
   /**
@@ -126,7 +146,7 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
    * @param lastTicketDigit the int of the last queueNumber created.
    * @return the String with the new ticket code (example: 'Q005').
    */
-  public String generateTicketCode(int lastTicketDigit) {
+  private String generateTicketCode(int lastTicketDigit) {
 
     int newTicketDigit = lastTicketDigit + 1;
     String newTicketCode = "";
@@ -141,10 +161,19 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
     return newTicketCode;
   }
 
-  public String calculateEstimatedTime(EventEto event, int queueNumber) {
+  /**
+   * Method calculates the estimated time with attention time and current time.
+   *
+   * @param event of type Event ETO
+   * @param queueNumber Of type Int
+   * @return estimated Time of type Timestamp
+   */
+  private Timestamp calculateEstimatedTime(EventEto event, int queueNumber) {
 
-    long time = event.getAttentionTime().getTime();
-    long queueTime = time * queueNumber / 1000;
-    return String.valueOf(queueTime);
+    long time = Integer.parseInt(event.getAttentionTime()) * 60000;
+    long currentTime = Timestamp.from(Instant.now()).getTime();
+    Timestamp estimatedTime = new Timestamp(currentTime + (time * queueNumber));
+    return estimatedTime;
   }
+
 }

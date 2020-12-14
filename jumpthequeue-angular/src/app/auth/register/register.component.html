@@ -1,13 +1,6 @@
 <div class="container">
     <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="onSubmit()" class="my-3">
         <div class="form-group required">
-            <input class="form-control" formControlName="username" placeholder="UserName">
-            <label class="text-danger"
-                *ngIf="registerForm.get('username').touched && registerForm.get('username').errors?.required">
-                Required Field
-            </label>
-        </div>
-        <div class="form-group required">
             <input class="form-control" formControlName="email" placeholder="email">
             <label class="text-danger"
                 *ngIf="registerForm.get('email').touched && registerForm.get('email').errors?.required">

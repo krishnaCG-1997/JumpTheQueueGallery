@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Events } from '../modals/event.modal';
 import { HttpClient } from '@angular/common/http';
-import { FilterVisitor } from 'src/app/auth/models/filter-visitor.model';
-import { Pageable } from 'src/app/auth/models/pageable.model';
+import { FilterVisitor } from 'src/app/shared/modals/filter-visitor.model';
+import { Pageable } from 'src/app/shared/modals/pageable.model';
 import { QueueDetail } from '../modals/queue-detail.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class EventService {
 
   isDisable = false;
   joinedEvents: any[] = [];
-  url = 'http://localhost:8081/services/rest';
+  private url = environment.url;
   queuesDetail: QueueDetail[] = [];
   eventDetails: Events[];
   constructor(private authService: AuthService, private http: HttpClient) { }

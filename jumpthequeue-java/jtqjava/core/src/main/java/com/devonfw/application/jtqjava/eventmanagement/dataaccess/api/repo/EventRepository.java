@@ -55,7 +55,7 @@ public interface EventRepository extends DefaultRepository<EventEntity> {
     if (logo != null && !logo.isEmpty()) {
       QueryUtil.get().whereString(query, $(alias.getLogo()), logo, criteria.getLogoOption());
     }
-    Timestamp attentionTime = criteria.getAttentionTime();
+    String attentionTime = criteria.getAttentionTime();
     if (attentionTime != null) {
       query.where($(alias.getAttentionTime()).eq(attentionTime));
     }

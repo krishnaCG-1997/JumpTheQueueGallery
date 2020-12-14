@@ -43,9 +43,9 @@ export class UserComponent implements OnInit {
     });
   }
 
-  viewQueue(id: string) {
+  viewQueue(id: string, name: string) {
     this.closeNav();
-    this.openSnackBar('Showing queue of ', id);
+    this.openSnackBar('Showing queue of ', name);
     this.route.navigate(['user/queue', id]);
   }
 

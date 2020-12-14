@@ -52,16 +52,12 @@ public class UcManageEventImpl extends AbstractEventUc implements UcManageEvent 
   @Override
   public void decreaseVisitorCount(long eventId) {
 
-    // TODO Auto-generated method stub
-    // the event is found by using the repository find method and eventId paremeter
     EventEntity eventEntity = getEventRepository().find(eventId);
 
     // the visitors gets decreased by one
     if (eventEntity.getVisitorCount() > 0) {
       eventEntity.setVisitorCount(eventEntity.getVisitorCount() - 1);
     }
-    // Based on Hibernate, the command save(Entity) is not strictly required, but it improves readability.
-    // the eventEntity gets saved
     getEventRepository().save(eventEntity);
 
   }
@@ -69,24 +65,13 @@ public class UcManageEventImpl extends AbstractEventUc implements UcManageEvent 
   @Override
   public void increaseVisitorCount(long eventId) {
 
-    // TODO Auto-generated method stub
-    // the event is found by using the repository find method and eventId paremeter
     EventEntity eventEntity = getEventRepository().find(eventId);
 
     // the visitors gets increased by one
     eventEntity.setVisitorCount(eventEntity.getVisitorCount() + 1);
 
-    // Based on Hibernate, the command save(Entity) is not strictly required, but it improves readability.
-    // the eventEntity gets saved
     getEventRepository().save(eventEntity);
 
-  }
-
-  @Override
-  public EventEto eventById(long eventId) {
-
-    EventEntity eventEntity = getEventRepository().find(eventId);
-    return getBeanMapper().map(eventEntity, EventEto.class);
   }
 
 }

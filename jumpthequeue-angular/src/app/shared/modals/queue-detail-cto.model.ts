@@ -1,4 +1,4 @@
-import { Visitor } from 'src/app/auth/models/visitor.model';
+import { Visitor } from 'src/app/shared/modals/visitor.model';
 import { Events } from './event.modal';
 
 export class QueueDetailCTO {

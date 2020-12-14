@@ -57,7 +57,7 @@ public class QueueDetailmanagementTest extends ComponentTest {
     this.eventEto.setDescription("Biggest december eve is here");
     this.eventEto.setLogo("");
     this.eventEto.setVisitorCount(1);
-    this.eventEto.setAttentionTime(Timestamp.from(Instant.now()));
+    this.eventEto.setAttentionTime("5");
 
   }
 

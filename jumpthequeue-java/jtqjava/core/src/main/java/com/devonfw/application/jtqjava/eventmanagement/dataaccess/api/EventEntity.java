@@ -33,14 +33,34 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
 
   private int visitorCount;
 
-  @Temporal(TemporalType.TIMESTAMP)
-  private Timestamp attentionTime;
+  private String attentionTime;
+
+  private String currentlyBeingAttended;
 
   private static final long serialVersionUID = 1L;
 
   /**
+   * @return currentlyBeingAttended
+   */
+  @Override
+  public String getCurrentlyBeingAttended() {
+
+    return this.currentlyBeingAttended;
+  }
+
+  /**
+   * @param currentlyBeingAttended new value of {@link #getcurrentlyBeingAttended}.
+   */
+  @Override
+  public void setCurrentlyBeingAttended(String currentlyBeingAttended) {
+
+    this.currentlyBeingAttended = currentlyBeingAttended;
+  }
+
+  /**
    * @return visitorCount
    */
+  @Override
   public int getVisitorCount() {
 
     return this.visitorCount;
@@ -49,6 +69,7 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
   /**
    * @param visitorCount new value of {@link #getvisitorCount}.
    */
+  @Override
   public void setVisitorCount(int visitorCount) {
 
     this.visitorCount = visitorCount;
@@ -166,7 +187,7 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
    * @return attentionTime
    */
   @Override
-  public Timestamp getAttentionTime() {
+  public String getAttentionTime() {
 
     return this.attentionTime;
   }
@@ -175,7 +196,7 @@ public class EventEntity extends ApplicationPersistenceEntity implements Event {
    * @param attentionTime new value of {@link #getattentionTime}.
    */
   @Override
-  public void setAttentionTime(Timestamp attentionTime) {
+  public void setAttentionTime(String attentionTime) {
 
     this.attentionTime = attentionTime;
   }

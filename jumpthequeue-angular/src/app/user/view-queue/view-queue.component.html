@@ -9,13 +9,20 @@
       <div class="display-4">
         <h1 class="style-bold">{{queue[0].queueNumber}}</h1>
       </div>
-      <h4>Estimated Time: <span><countdown [config]="{ leftTime: queue[0].minEstimatedTime, format: 'm:s' }"></countdown></span></h4>
+      <h4>Estimated Time: <span>{{timer}}</span></h4>
       
     </div>
   </div>
   <div class="mt-2">
     <h1>Currently Being Attended</h1>
-    <h4 class="style-bold size">Q001</h4>
+    <div *ngIf="checkCount(eventDetails.isJoined) ;then attended else not_attended"> </div>
+    <ng-template #attended>
+      <h4 class="style-bold size">{{eventDetails.currentlyBeingAttended}}</h4>
+    </ng-template>
+    <ng-template #not_attended>
+      <h4 class="style-bold size">--</h4>
+    </ng-template>
+    
   </div>
   <div *ngIf="eventDetails.isJoined ;then content else other_content"> </div>
   <ng-template #content>
