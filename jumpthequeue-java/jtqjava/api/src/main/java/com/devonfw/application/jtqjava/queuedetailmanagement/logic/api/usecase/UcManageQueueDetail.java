@@ -10,8 +10,7 @@ public interface UcManageQueueDetail {
   /**
    * Deletes a queueDetail from the database by its id 'queueDetailId'.
    *
-   * @param queueDetailId Id of the queueDetail to delete
-   * @return boolean <code>true</code> if the queueDetail can be deleted, <code>false</code> otherwise
+   * @param queueDetailId Id of the queueDetail to delete.
    */
   void deleteQueueDetail(long queueDetailId);
 
@@ -19,7 +18,7 @@ public interface UcManageQueueDetail {
    * Saves a queueDetail and store it in the database.
    *
    * @param queueDetail the {@link QueueDetailEto} to create.
-   * @return the new {@link QueueDetailEto} that has been saved with ID and version.
+   * @return newly saved QueueDetailEto object if visitor is joining the event queue for the first time, Null otherwise.
    */
   QueueDetailEto saveQueueDetail(QueueDetailEto queueDetail);
 

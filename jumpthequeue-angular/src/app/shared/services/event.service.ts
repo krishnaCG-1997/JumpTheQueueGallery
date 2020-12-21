@@ -20,7 +20,7 @@ export class EventService {
   constructor(private authService: AuthService, private http: HttpClient) { }
 
 
-  getAllEvent() {
+  async getAllEvent() {
     const filters: FilterVisitor = new FilterVisitor();
     const pageable: Pageable = new Pageable();
 
@@ -28,20 +28,19 @@ export class EventService {
     pageable.pageSize = 20;
     pageable.sort = [];
     filters.pageable = pageable;
-    this.http.post<Events>(this.url + '/eventmanagement/v1/event/search', filters).subscribe(data => {
-      this.eventDetails = data['content'];
-      for (let i = 0; i < this.eventDetails.length; i++) {
-        if (this.joinedEvents.includes(this.eventDetails[i].id)) {
-          this.eventDetails[i].isJoined = true;
-        }
-        else {
-          this.eventDetails[i].isJoined = false;
-        }
+    let data = await this.http.post<Events>(this.url + '/eventmanagement/v1/event/search', filters).toPromise();
+    this.eventDetails = data['content'];
+    for (let i = 0; i < this.eventDetails.length; i++) {
+      if (this.joinedEvents.includes(this.eventDetails[i].id)) {
+        this.eventDetails[i].isJoined = true;
       }
+      else {
+        this.eventDetails[i].isJoined = false;
+      }
+    }
 
-      localStorage.setItem('eventList', JSON.stringify(this.eventDetails));
-      console.log(this.eventDetails);
-    });;
+    localStorage.setItem('eventList', JSON.stringify(this.eventDetails));
+    console.log(this.eventDetails);
   }
 
 
@@ -58,25 +57,25 @@ export class EventService {
     });
   }
 
-  getEventById(id: string) {
-    return this.http.get(this.url + '/eventmanagement/v1/event/' + id);
+  async getEventById(id: string) {
+    return await this.http.get(this.url + '/eventmanagement/v1/event/' + id).toPromise();
   }
 
-  joinEvent(eventId: string) {
+  async joinEvent(eventId: string) {
     const queueObj: any = {};
     queueObj.eventId = eventId;
     queueObj.visitorId = this.authService.userId;
-    return this.http.post<QueueDetail>(this.url + '/queuedetailmanagement/v1/queuedetail', queueObj);
+    return await this.http.post<QueueDetail>(this.url + '/queuedetailmanagement/v1/queuedetail', queueObj).toPromise();
 
   }
 
-  leaveEvent(id: string, eventId: string) {
+  async leaveEvent(id: string, eventId: string) {
     const joinedEventIndex = this.joinedEvents.indexOf(eventId);
     this.queuesDetail = [];
     if (joinedEventIndex !== -1) {
       this.joinedEvents.splice(joinedEventIndex, 1);
     }
-    return this.http.delete(this.url + '/queuedetailmanagement/v1/queuedetail/' + id);
+    return await this.http.delete(this.url + '/queuedetailmanagement/v1/queuedetail/' + id).toPromise();
   }
 
   logOut() {

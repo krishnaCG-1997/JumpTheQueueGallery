@@ -66,7 +66,7 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
     List<QueueDetailEto> queueDetailEtosInQueue = getQueueDetailsByEventIdAndVisitorId(eventId, visitorId);
 
     if (!queueDetailEtosInQueue.isEmpty()) {
-      return null;
+      return null; // try using optional
     }
 
     List<QueueDetailEto> queueDetailEventEtosInQueue = getQueueDetailsByEventId(eventId);
@@ -84,7 +84,6 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
       int lastTicketDigit = Integer.parseInt(lastQueueNumber.getQueueNumber().substring(1));
       queueDetailEntity.setQueueNumber(generateTicketCode(lastTicketDigit));
       queueDetailEntity.setMinEstimatedTime(calculateEstimatedTime(event, lastTicketDigit + 1));
-      System.out.println(calculateEstimatedTime(event, lastTicketDigit + 1));
     }
 
     // set the creation time, startTime and endTime
@@ -154,7 +153,7 @@ public class UcManageQueueDetailImpl extends AbstractQueueDetailUc implements Uc
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append(newTicketDigit);
     while (stringBuilder.length() < 3) {
-      stringBuilder.insert(0, "0");
+      stringBuilder.insert(0, "0"); // 02,002
     }
     stringBuilder.insert(0, "Q");
     newTicketCode = stringBuilder.toString();

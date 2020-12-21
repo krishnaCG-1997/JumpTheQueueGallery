@@ -45,13 +45,6 @@ public class QueuedetailmanagementRestServiceImpl implements Queuedetailmanageme
   }
 
   @Override
-  public QueueDetailEto joinTheQueue(long visitorId, long eventId) {
-
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
   public QueueDetailCto getQueueDetailCto(long id) {
 
     return this.queuedetailmanagement.findQueueDetailCto(id);

@@ -1,5 +1,5 @@
-import { EventEmitter, Inject } from '@angular/core';
-import { Component, OnInit, Output } from '@angular/core';
+import { Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/shared/services/event.service';
 import { UserComponent } from '../user.component';
 

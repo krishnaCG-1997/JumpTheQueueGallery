@@ -15,7 +15,7 @@
   </div>
   <div class="mt-2">
     <h1>Currently Being Attended</h1>
-    <div *ngIf="checkCount(eventDetails.isJoined) ;then attended else not_attended"> </div>
+    <div *ngIf="checkCount(eventDetails.isJoined) then attended else not_attended"> </div>
     <ng-template #attended>
       <h4 class="style-bold size">{{eventDetails.currentlyBeingAttended}}</h4>
     </ng-template>
@@ -24,7 +24,7 @@
     </ng-template>
     
   </div>
-  <div *ngIf="eventDetails.isJoined ;then content else other_content"> </div>
+  <div *ngIf="eventDetails.isJoined then content else other_content"> </div>
   <ng-template #content>
     <p><button class="bg-dark" (click)="leave()">Leave The Queue</button></p>
   </ng-template>

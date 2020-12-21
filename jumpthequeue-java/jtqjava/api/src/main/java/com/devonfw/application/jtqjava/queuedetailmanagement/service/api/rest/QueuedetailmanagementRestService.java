@@ -35,7 +35,7 @@ public interface QueuedetailmanagementRestService {
   public QueueDetailEto getQueueDetail(@PathParam("id") long id);
 
   /**
-   * Delegates to {@link Queuedetailmanagement#saveQueueDetail}.
+   * Delegates to {@link Queuedetailmanagement#saveQueueDetail} which will implement Join the Queue.
    *
    * @param queuedetail the {@link QueueDetailEto} to be saved
    * @return the recently created {@link QueueDetailEto}
@@ -43,10 +43,6 @@ public interface QueuedetailmanagementRestService {
   @POST
   @Path("/queuedetail/")
   public QueueDetailEto saveQueueDetail(QueueDetailEto queuedetail);
-
-  @POST
-  @Path("/queuedetail/join")
-  public QueueDetailEto joinTheQueue(long visitorId, long eventId);
 
   /**
    * Delegates to {@link Queuedetailmanagement#deleteQueueDetail}.

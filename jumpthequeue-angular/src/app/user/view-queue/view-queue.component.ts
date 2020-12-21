@@ -52,16 +52,14 @@ export class ViewQueueComponent implements OnInit {
 
 
 
-  getDetails(id: string) {
-    this.eventService.getEventById(id).subscribe(event => {
-      console.log(event);
-      this.eventDetails = event;
-      this.queue = this.eventService.queuesDetail.filter(e => e.eventId == this.eventDetails.id);
-      if (this.eventService.joinedEvents.includes(this.eventDetails.id)) {
-        this.eventDetails.isJoined = true;
-      }
-      console.log(this.eventDetails);
-    });
+  async getDetails(id: string) {
+    let event = await this.eventService.getEventById(id);
+    this.eventDetails = event;
+    this.queue = this.eventService.queuesDetail.filter(e => e.eventId == this.eventDetails.id);
+    if (this.eventService.joinedEvents.includes(this.eventDetails.id)) {
+      this.eventDetails.isJoined = true;
+    }
+    console.log(this.eventDetails);
   }
 
   updateEventList(join: boolean) {
@@ -74,29 +72,31 @@ export class ViewQueueComponent implements OnInit {
     localStorage.setItem('eventList', JSON.stringify(this.events));
   }
 
-  join(eventId: string) {
-    this.updateEventList(true);
-    this.eventDetails.isJoined = true;
-    this.checkCount(this.eventDetails.isJoined);
-    this.eventService.joinEvent(eventId).subscribe(data => {
-      this.queue[0] = data;
-      console.log(data);
+  async join(eventId: string) {
+
+    let data=await this.eventService.joinEvent(eventId);
+    if(data!=null)
+    {
+      this.updateEventList(true);
+      this.checkCount(true);
+      this.queue[0] =data;
+      this.eventDetails.isJoined = true;
       this.openSnackBar('Joined The Queue', 'Success');
       this.eventService.fetchJoinedEvents();
-    });
+    }
+    else{ 
+      this.openSnackBar('Error In Joining', 'Error');
+    }
   }
 
-  leave() {
+  async leave() {
+
+    let data= await this.eventService.leaveEvent(this.queue[0].id, this.eventDetails.id);
     this.updateEventList(false);
     this.eventDetails.isJoined = false;
-    this.eventService.leaveEvent(this.queue[0].id, this.eventDetails.id).subscribe(data => {
-      this.eventService.fetchJoinedEvents();
-      this.getDetails(this.eventDetails.id);
-      this.openSnackBar('Leaved The Queue', 'Success');
-    },
-      err => {
-        this.openSnackBar('Leave The Queue', 'Error');
-      });
+    this.eventService.fetchJoinedEvents();
+    this.getDetails(this.eventDetails.id);
+    this.openSnackBar('Leaved The Queue', 'Success');
   }
 
   checkCount(isJoined: boolean)
@@ -115,7 +115,7 @@ export class ViewQueueComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 3000,
+      duration: 2000,
       panelClass: ['mat-toolbar', 'mat-accent']
     });
   }
