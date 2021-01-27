@@ -21,6 +21,7 @@ export class AuthController {
   async register(@Body() user: User): Promise<User> {
     try {
       const registered = await this.authService.register(user);
+      console.log(registered);
       return registered;
     } catch (e) {
       throw new BadRequestException(e.message);

@@ -10,7 +10,7 @@ export class CreateTables1609824133465 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE "event" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "version" integer NOT NULL DEFAULT (1), "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), eventName VARCHAR(255), location VARCHAR(255), description VARCHAR(255), logo VARCHAR(255), visitorCount INTEGER, attentionTime VARCHAR(255),currentlyBeingAttended VARCHAR(255), 
         startDate text,endDate text)`);
         await queryRunner.query(`CREATE TABLE "queue_detail" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "version" integer NOT NULL DEFAULT (1), "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), queueNumber VARCHAR(5), creationTime datetime, startTime datetime, endTime datetime, minEstimatedTime datetime, 
-        idUser BIGINT NOT NULL, idEvent BIGINT NOT NULL, 
+        idUser BIGINT, idEvent BIGINT, 
         FOREIGN KEY(idUser) REFERENCES user(id), 
         FOREIGN KEY(idEvent) REFERENCES event(id))`);
     }

@@ -9,4 +9,5 @@ export class EventCrudService extends TypeOrmCrudService<Event> {
   constructor(@InjectRepository(Event) repo: Repository<Event>) {
     super(repo);
   }
+
 }

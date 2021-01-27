@@ -42,19 +42,20 @@ export class QueueDetail extends BaseEntity {
     @ApiPropertyOptional()
     @IsDefined({ groups: [CrudValidationGroups.CREATE] })
     @IsOptional({ groups: [CrudValidationGroups.UPDATE] })
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { eager: true })
     @JoinColumn({ name: 'idUser', referencedColumnName: 'id' })
-    user?: User;
+    idUser?: number;
 
     @ApiPropertyOptional()
     @IsDefined({ groups: [CrudValidationGroups.CREATE] })
     @IsOptional({ groups: [CrudValidationGroups.UPDATE] })
-    @ManyToOne(() => Event)
+    @ManyToOne(() => Event, { eager: true })
     @JoinColumn({ name: 'idEvent', referencedColumnName: 'id' })
-    event?: Event;
+    idEvent?: number;
 
 }
 
+// type => UserEntity, user => user.books
 /**
  * queueNumber, creationTime, startTime, endTime, minEstimatedTime,
                 idVisitor, idEvent
