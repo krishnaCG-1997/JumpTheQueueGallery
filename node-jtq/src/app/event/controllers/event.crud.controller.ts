@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 })
 @ApiTags('employee')
 @CrudType(Event)
-@Controller('event/events')
+@Controller('event/events') //path
 export class EventCrudController {
   constructor(public service: EventCrudService) { }
 }
