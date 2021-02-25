@@ -9,4 +9,4 @@ Execution: For the execution of front end 'devon ng serve' command has been used
            For checking the backend functionalities we have used Postman. 
            For checking the frontend functionalities we have used chrome.
            
-Integration: We have integrated backend and frontend using the REST API call.
+Integration: We have integrated backend and frontend using the REST API calls.
